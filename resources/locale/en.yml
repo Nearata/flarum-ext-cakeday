@@ -1,5 +1,5 @@
 nearata-cakeday:
   admin:
-    new_members: Show a cake on new members too
+    new_members: Show a cake icon on new members
   forum:
     anniversary: Anniversary
