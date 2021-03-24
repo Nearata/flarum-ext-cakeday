@@ -1,0 +1,5 @@
+nearata-cakeday:
+  admin:
+    new_members: Show a cake on new members too
+  forum:
+    anniversary: Anniversary

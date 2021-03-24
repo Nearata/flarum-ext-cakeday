@@ -1,0 +1,44 @@
+{
+    "name": "nearata/flarum-ext-cakeday",
+    "description": "Show a birthday cake emoji beside the names of members on their join anniversary.",
+    "keywords": [
+        "flarum",
+        "cakeday",
+        "anniversary"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/Nearata/flarum-ext-signup-cakeday/issues",
+        "source": "https://github.com/Nearata/flarum-ext-signup-cakeday"
+    },
+    "require": {
+        "flarum/core": ">=0.1.0-beta.16 <=0.1.0"
+    },
+    "authors": [
+        {
+            "name": "Nearata",
+            "email": "williamdicicco@protonmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Nearata\\CakeDay\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Cakeday",
+            "category": "feature",
+            "icon": {
+                "name": "fas fa-birthday-cake",
+                "backgroundColor": "#FFD449",
+                "color": "#fff"
+            }
+        },
+        "flagrow": {
+            "discuss": ""
+        }
+    }
+}
