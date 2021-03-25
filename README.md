@@ -28,6 +28,10 @@ composer remove nearata/flarum-ext-cakeday
 php flarum cache:clear
 ```
 
+## TODO List
+
+See [TODO](TODO). Suggestions are welcome.
+
 ## Links
 
 - [Packagist](https://packagist.org/packages/nearata/flarum-ext-cakeday)
