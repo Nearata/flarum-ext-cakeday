@@ -12,7 +12,7 @@ return [
         ->js(__DIR__.'/js/dist/admin.js'),
     new Extend\Locales(__DIR__ . '/resources/locale'),
     (new Extend\Settings())
-        ->serializeToForum('cakedayNewMembers', 'nearata-cakeday.admin.new_members', function ($value) {
-            return (bool) $value;
-        })
+        ->serializeToForum('cakedayNewMembers', 'nearata-cakeday.admin.new_members', 'boolval', false)
+        ->serializeToForum('cakedayNewMembersDays', 'nearata-cakeday.admin.new_members_days', 'intval', 1)
+        ->serializeToForum('cakedayNewMembersLabel', 'nearata-cakeday.admin.new_members_label', 'boolval', false)
 ];

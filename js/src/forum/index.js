@@ -7,21 +7,29 @@ app.initializers.add('nearata-cakeday', app => {
     extend(User.prototype, 'badges', function (items) {
         const joinTime = this.joinTime();
 
-        const join = new Date(joinTime);
-        const joinYear = join.getFullYear();
+        const join = window.dayjs(joinTime);
+        const today = window.dayjs();
 
-        const today = new Date();
-        const todayYear = today.getFullYear();
+        let label = app.translator.trans('nearata-cakeday.forum.anniversary');
 
-        if (joinYear === todayYear && !app.forum.attribute('cakedayNewMembers')) {
-            return;
-        }
+        if (today.year() === join.year() && app.forum.attribute('cakedayNewMembers')) {
+            const days = app.forum.attribute('cakedayNewMembersDays');
+            const endDate = window.dayjs(joinTime).add(days, 'day');
 
-        const isMonth = join.getMonth() === today.getMonth();
-        const isDay = join.getDate() === today.getDate();
+            if (app.forum.attribute('cakedayNewMembersLabel')) {
+                label = app.translator.trans('nearata-cakeday.forum.new_member_label');
+            }
 
-        if (!(isMonth && isDay)) {
-            return;
+            if (today > endDate) {
+                return;
+            }
+        } else {
+            const isMonth = join.month() === today.month();
+            const isDay = join.date() === today.date();
+
+            if (!(isMonth && isDay)) {
+                return;
+            }
         }
 
         items.add(
@@ -29,7 +37,7 @@ app.initializers.add('nearata-cakeday', app => {
             m(Badge, {
                 type: 'cakeday',
                 icon: 'fas fa-birthday-cake',
-                label: app.translator.trans('nearata-cakeday.forum.anniversary')
+                label: label
             })
         )
     });

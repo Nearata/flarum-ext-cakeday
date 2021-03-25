@@ -1,5 +1,9 @@
 nearata-cakeday:
   admin:
     new_members: Show a cake icon on new members
+    new_members_howlong: (New Members) For how long
+    new_members_howlong_helptext: Expressed in days.
+    new_members_changelabel: "(New Members) Change the label to: New Member"
   forum:
     anniversary: Anniversary
+    new_member_label: New Member
