@@ -30,7 +30,7 @@ php flarum cache:clear
 
 ## TODO List
 
-See [TODO](TODO). Suggestions are welcome.
+See [TODO](TODO.md). Suggestions are welcome.
 
 ## Links
 
