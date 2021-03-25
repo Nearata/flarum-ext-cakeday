@@ -29,7 +29,7 @@ app.initializers.add('nearata-cakeday', app => {
             m(Badge, {
                 type: 'cakeday',
                 icon: 'fas fa-birthday-cake',
-                label: 'Anniversary'
+                label: app.translator.trans('nearata-cakeday.forum.anniversary')
             })
         )
     });
