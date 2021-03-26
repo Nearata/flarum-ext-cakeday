@@ -35,12 +35,16 @@ app.initializers.add('nearata-cakeday', app => {
             }
         }
 
+        const bgColor = app.forum.attribute('cakedayBgColor');
+        const textColor = app.forum.attribute('cakedayTextColor');
+
         items.add(
             'nearataCakeday',
             m(Badge, {
                 type: 'cakeday',
                 icon: 'fas fa-birthday-cake',
-                label: label
+                label: label,
+                style: `background-color:${bgColor};color:${textColor}`
             })
         )
     });

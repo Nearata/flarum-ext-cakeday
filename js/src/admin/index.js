@@ -25,7 +25,7 @@ app.initializers.add('nearata-cakeday', app => {
                 isTrue(isNewMembers) ? [
                     m('.Form-group', [
                         m('label', app.translator.trans('nearata-cakeday.admin.new_members_howlong')),
-                        m('.helpText', app.translator.trans('nearata-cakeday.admin.new_members_howlong_helptext')),
+                        m('.helpText', app.translator.trans('nearata-cakeday.admin.new_members_howlong_help')),
                         m('input', {
                             class: 'FormControl',
                             type: 'number',
@@ -43,5 +43,31 @@ app.initializers.add('nearata-cakeday', app => {
                     ])
                 ] : null
             ];
+        })
+        .registerSetting(function () {
+            return [
+                m('.Form-group', [
+                    m('label', app.translator.trans('nearata-cakeday.admin.cake_bg_color_label')),
+                    m('.helpText', app.translator.trans('nearata-cakeday.admin.cake_bg_color_help')),
+                    m('input', {
+                        class: 'FormControl',
+                        type: 'text',
+                        bidi: this.setting('nearata-cakeday.admin.cake_bg_color'),
+                        autocomplete: 'off',
+                        placeholder: '#FFD449'
+                    })
+                ]),
+                m('.Form-group', [
+                    m('label', app.translator.trans('nearata-cakeday.admin.cake_txt_color_label')),
+                    m('.helpText', app.translator.trans('nearata-cakeday.admin.cake_txt_color_help')),
+                    m('input', {
+                        class: 'FormControl',
+                        type: 'text',
+                        bidi: this.setting('nearata-cakeday.admin.cake_text_color'),
+                        autocomplete: 'off',
+                        placeholder: '#FFF'
+                    })
+                ])
+            ]
         });
 });

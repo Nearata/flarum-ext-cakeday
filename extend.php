@@ -15,4 +15,6 @@ return [
         ->serializeToForum('cakedayNewMembers', 'nearata-cakeday.admin.new_members', 'boolval', false)
         ->serializeToForum('cakedayNewMembersDays', 'nearata-cakeday.admin.new_members_days', 'intval', 1)
         ->serializeToForum('cakedayNewMembersLabel', 'nearata-cakeday.admin.new_members_label', 'boolval', false)
+        ->serializeToForum('cakedayBgColor', 'nearata-cakeday.admin.cake_bg_color', 'strval', '')
+        ->serializeToForum('cakedayTextColor', 'nearata-cakeday.admin.cake_text_color', 'strval', '')
 ];
