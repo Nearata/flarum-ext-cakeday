@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - (Add) New option in admin to change the label of new members to `New Member`
 - (Add) New translations to reflect the overall changes
 - (Change) Switched to dayjs
+- (Fix) If it was still the member's day and the year changed, the cake icon disappeared
 
 ## [1.0.1] - 2021-03-25
 
