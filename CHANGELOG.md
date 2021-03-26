@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - (Add) New options in admin to change the background and text color of the cake icon
 - (Add) New translations to reflect the overall changes
 - (Change) Switched to dayjs
-- (Fix) If it was still the member's day and the year changed, the cake icon disappeared
+- (Fix) If the year changed and it still was the member's day, the cake icon disappeared
 
 ## [1.0.1] - 2021-03-25
 
