@@ -11,3 +11,14 @@ nearata-cakeday:
   forum:
     anniversary: Anniversary
     new_member_label: New Member
+    page:
+      anniversaries_between_label: "Anniversaries between {date1} and {date2}"
+      anniversaries_for_label: "Anniversaries for {date}"
+      empty: No anniversaries.
+      filter_options:
+        today: Today
+        tomorrow: Tomorrow
+        upcoming: Upcoming
+        all: All
+      load_more_button: Load more
+      title: Anniversaries
