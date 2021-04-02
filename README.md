@@ -6,7 +6,8 @@ _Extension inspired by [Discourse Cakeday](https://www.discourse.org/plugins/cak
 
 ## Preview
 
-[Pictures](https://imgur.com/a/iFn6IXw)
+- [Pictures](https://imgur.com/a/iFn6IXw)
+- [Anniversaries Page](https://imgur.com/a/8OaPbcJ)
 
 ## Install
 
