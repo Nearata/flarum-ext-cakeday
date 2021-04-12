@@ -19,7 +19,15 @@ app.initializers.add('nearata-cakeday', app => {
         path: '/anniversaries',
         resolver: {
             onmatch: function (args) {
+                if (!app.forum.attribute('cakedayPageEnabled')) {
+                    return m.route.SKIP;
+                }
+
                 if (!app.session.user) {
+                    return m.route.SKIP;
+                }
+
+                if (!app.session.user.attribute('canNearataCakedayViewPage')) {
                     return m.route.SKIP;
                 }
 
@@ -29,7 +37,15 @@ app.initializers.add('nearata-cakeday', app => {
     };
 
     extend(IndexPage.prototype, 'navItems', items => {
+        if (!app.forum.attribute('cakedayPageEnabled')) {
+            return;
+        }
+
         if (!app.session.user) {
+            return;
+        }
+
+        if (!app.session.user.attribute('canNearataCakedayViewPage')) {
             return;
         }
 

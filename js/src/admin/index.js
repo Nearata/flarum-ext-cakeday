@@ -10,12 +10,16 @@ const isTrue = setting => {
     }
 };
 
+const trans = key => {
+    return app.translator.trans(`nearata-cakeday.admin.settings.${key}`);
+};
+
 app.initializers.add('nearata-cakeday', app => {
     app.extensionData.for('nearata-cakeday')
         .registerSetting(
             {
                 setting: 'nearata-cakeday.admin.new_members',
-                label: app.translator.trans('nearata-cakeday.admin.new_members'),
+                label: trans('new_members'),
                 type: 'boolean'
             }
         )
@@ -24,8 +28,8 @@ app.initializers.add('nearata-cakeday', app => {
             return [
                 isTrue(isNewMembers) ? [
                     m('.Form-group', [
-                        m('label', app.translator.trans('nearata-cakeday.admin.new_members_howlong')),
-                        m('.helpText', app.translator.trans('nearata-cakeday.admin.new_members_howlong_help')),
+                        m('label', trans('new_members_howlong')),
+                        m('.helpText', trans('new_members_howlong_help')),
                         m('input', {
                             class: 'FormControl',
                             type: 'number',
@@ -39,7 +43,7 @@ app.initializers.add('nearata-cakeday', app => {
                         m(Switch, {
                             onchange: value => this.setting('nearata-cakeday.admin.new_members_label')(value),
                             state: this.setting('nearata-cakeday.admin.new_members_label')()
-                        }, app.translator.trans('nearata-cakeday.admin.new_members_changelabel'))
+                        }, trans('new_members_changelabel'))
                     ])
                 ] : null
             ];
@@ -47,8 +51,8 @@ app.initializers.add('nearata-cakeday', app => {
         .registerSetting(function () {
             return [
                 m('.Form-group', [
-                    m('label', app.translator.trans('nearata-cakeday.admin.cake_bg_color_label')),
-                    m('.helpText', app.translator.trans('nearata-cakeday.admin.cake_bg_color_help')),
+                    m('label', trans('cake_bg_color_label')),
+                    m('.helpText', trans('cake_bg_color_help')),
                     m('input', {
                         class: 'FormControl',
                         type: 'text',
@@ -58,8 +62,8 @@ app.initializers.add('nearata-cakeday', app => {
                     })
                 ]),
                 m('.Form-group', [
-                    m('label', app.translator.trans('nearata-cakeday.admin.cake_txt_color_label')),
-                    m('.helpText', app.translator.trans('nearata-cakeday.admin.cake_txt_color_help')),
+                    m('label', trans('cake_txt_color_label')),
+                    m('.helpText', trans('cake_txt_color_help')),
                     m('input', {
                         class: 'FormControl',
                         type: 'text',
@@ -69,5 +73,20 @@ app.initializers.add('nearata-cakeday', app => {
                     })
                 ])
             ]
-        });
+        })
+        .registerSetting(
+            {
+                setting: 'nearata-cakeday.admin.anniversaries_page',
+                label: trans('anniversaries_page_label'),
+                type: 'boolean'
+            }
+        )
+        .registerPermission(
+            {
+                icon: 'fas fa-birthday-cake',
+                label: app.translator.trans('nearata-cakeday.admin.permissions.can_view_anniversaries_page'),
+                permission: 'nearata-cakeday.can_view_anniversaries_page'
+            },
+            'view'
+        );
 });
