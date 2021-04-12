@@ -15,10 +15,6 @@ const memberDay = (today, joinTime) => {
 };
 
 app.initializers.add('nearata-cakeday', app => {
-    app.cakeDay = {
-        resourcesLoaded: false
-    }
-
     app.routes.nearata_cakeday_anniversaries = {
         path: '/anniversaries',
         resolver: {
