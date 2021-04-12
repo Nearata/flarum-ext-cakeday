@@ -4,7 +4,6 @@ namespace Nearata\CakeDay;
 
 use Flarum\Filter\FilterInterface;
 use Flarum\Filter\FilterState;
-use Flarum\Foundation\ValidationException;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
