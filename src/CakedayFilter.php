@@ -15,7 +15,7 @@ class CakedayFilter implements FilterInterface
         return 'cakeday';
     }
 
-    public function filter(FilterState $filterState, string $filterValue, bool $negate)
+    public function filter(FilterState $filterState, string $filterValue, bool $negate): void
     {
         if (!$filterValue) {
             return;
@@ -44,14 +44,14 @@ class CakedayFilter implements FilterInterface
         }
     }
 
-    private function getTodayTomorrow(FilterState $filterState, Carbon $date)
+    private function getTodayTomorrow(FilterState $filterState, Carbon $date): void
     {
         $filterState->getQuery()
             ->whereMonth('joined_at', $date->month)
             ->whereDay('joined_at', $date->day);
     }
 
-    private function getUpcoming(FilterState $filterState, Carbon $date1, Carbon $date2)
+    private function getUpcoming(FilterState $filterState, Carbon $date1, Carbon $date2): void
     {
         $range = [];
 
@@ -65,7 +65,7 @@ class CakedayFilter implements FilterInterface
             ->whereRaw("DATE_FORMAT(joined_at, '%m%d') IN ({$bindings})", $range);
     }
 
-    private function getAll(FilterState $filterState)
+    private function getAll(FilterState $filterState): void
     {
         $filterState->getQuery()
             ->orderByRaw('MONTH(joined_at), DAY(joined_at)');

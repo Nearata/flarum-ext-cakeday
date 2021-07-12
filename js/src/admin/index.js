@@ -1,3 +1,4 @@
+import app from 'flarum/admin/app';
 import Switch from 'flarum/common/components/Switch';
 
 const isTrue = setting => {
@@ -14,7 +15,7 @@ const trans = key => {
     return app.translator.trans(`nearata-cakeday.admin.settings.${key}`);
 };
 
-app.initializers.add('nearata-cakeday', app => {
+app.initializers.add('nearata-cakeday', () => {
     app.extensionData.for('nearata-cakeday')
         .registerSetting(
             {
@@ -85,7 +86,8 @@ app.initializers.add('nearata-cakeday', app => {
             {
                 icon: 'fas fa-birthday-cake',
                 label: app.translator.trans('nearata-cakeday.admin.permissions.can_view_anniversaries_page'),
-                permission: 'nearata-cakeday.can_view_anniversaries_page'
+                permission: 'nearata-cakeday.can_view_anniversaries_page',
+                tagScoped: true
             },
             'view'
         );

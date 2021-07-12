@@ -1,5 +1,5 @@
 import { extend } from 'flarum/common/extend';
-
+import app from 'flarum/forum/app';
 import Badge from 'flarum/common/components/Badge';
 import IndexPage from 'flarum/common/components/IndexPage';
 import LinkButton from 'flarum/common/components/LinkButton';
@@ -14,7 +14,7 @@ const memberDay = (today, joinTime) => {
     return today < endDate;
 };
 
-app.initializers.add('nearata-cakeday', app => {
+app.initializers.add('nearata-cakeday', () => {
     app.routes.nearata_cakeday_anniversaries = {
         path: '/anniversaries',
         resolver: {
