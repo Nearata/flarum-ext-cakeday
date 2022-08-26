@@ -1,6 +1,6 @@
 import app from "flarum/admin/app";
+import ColorPreviewInput from "flarum/common/components/ColorPreviewInput";
 import Switch from "flarum/common/components/Switch";
-import ColorPreviewInput from "flarum/common/components/ColorPreviewInput"
 
 const isTrue = (setting) => {
     if (typeof setting === "string") {
@@ -73,7 +73,7 @@ app.initializers.add("nearata-cakeday", () => {
                         bidi: this.setting(
                             "nearata-cakeday.admin.cake_bg_color"
                         ),
-                        placeholder: "#FFD449"
+                        placeholder: "#FFD449",
                     }),
                 ]),
                 m(".Form-group", [
@@ -83,7 +83,7 @@ app.initializers.add("nearata-cakeday", () => {
                         bidi: this.setting(
                             "nearata-cakeday.admin.cake_text_color"
                         ),
-                        placeholder: "#FFFFFF"
+                        placeholder: "#FFFFFF",
                     }),
                 ]),
             ];
