@@ -1,6 +1,6 @@
 <?php
 
-namespace Nearata\CakeDay;
+namespace Nearata\CakeDay\Filter;
 
 use Flarum\Filter\FilterInterface;
 use Flarum\Filter\FilterState;

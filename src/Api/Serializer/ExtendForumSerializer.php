@@ -1,11 +1,11 @@
 <?php
 
-namespace Nearata\CakeDay;
+namespace Nearata\CakeDay\Api\Serializer;
 
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Settings\SettingsRepositoryInterface;
 
-class ForumSettings
+class ExtendForumSerializer
 {
     protected $settings;
 

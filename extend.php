@@ -7,6 +7,8 @@ use Flarum\Api\Serializer\BasicUserSerializer;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\User\Filter\UserFilterer;
 use Nearata\CakeDay\Api\Serializer\ExtendBasicUserSerializer;
+use Nearata\CakeDay\Api\Serializer\ExtendForumSerializer;
+use Nearata\CakeDay\Filter\CakedayFilter;
 
 return [
     (new Extend\Frontend('forum'))
@@ -20,7 +22,7 @@ return [
     new Extend\Locales(__DIR__ . '/resources/locale'),
 
     (new Extend\ApiSerializer(ForumSerializer::class))
-        ->attributes(ForumSettings::class),
+        ->attributes(ExtendForumSerializer::class),
 
     (new Extend\Filter(UserFilterer::class))
         ->addFilter(CakedayFilter::class),

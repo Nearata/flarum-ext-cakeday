@@ -1,16 +1,4 @@
 import app from "flarum/admin/app";
-import ColorPreviewInput from "flarum/common/components/ColorPreviewInput";
-import Switch from "flarum/common/components/Switch";
-
-const isTrue = (setting) => {
-    if (typeof setting === "string") {
-        return !!parseInt(setting);
-    }
-
-    if (typeof setting === "boolean") {
-        return setting;
-    }
-};
 
 const trans = (key) => {
     return app.translator.trans(`nearata-cakeday.admin.settings.${key}`);
@@ -21,77 +9,41 @@ app.initializers.add("nearata-cakeday", () => {
         .for("nearata-cakeday")
         .registerSetting({
             setting: "nearata-cakeday.admin.new_members",
-            label: trans("new_members"),
             type: "boolean",
+            label: trans("new_members"),
         })
-        .registerSetting(function () {
-            const isNewMembers = this.setting(
-                "nearata-cakeday.admin.new_members"
-            )();
-            return [
-                isTrue(isNewMembers)
-                    ? [
-                          m(".Form-group", [
-                              m("label", trans("new_members_howlong")),
-                              m(".helpText", trans("new_members_howlong_help")),
-                              m("input", {
-                                  class: "FormControl",
-                                  type: "number",
-                                  bidi: this.setting(
-                                      "nearata-cakeday.admin.new_members_days"
-                                  ),
-                                  autocomplete: "off",
-                                  placeholder: "7",
-                                  min: "1",
-                              }),
-                          ]),
-                          m(".Form-group", [
-                              m(
-                                  Switch,
-                                  {
-                                      onchange: (value) =>
-                                          this.setting(
-                                              "nearata-cakeday.admin.new_members_label"
-                                          )(value),
-                                      state: this.setting(
-                                          "nearata-cakeday.admin.new_members_label"
-                                      )(),
-                                  },
-                                  trans("new_members_changelabel")
-                              ),
-                          ]),
-                      ]
-                    : null,
-            ];
+        .registerSetting({
+            setting: "nearata-cakeday.admin.new_members_days",
+            type: "number",
+            label: trans("new_members_howlong"),
+            help: trans("new_members_howlong_help"),
+            autocomplete: "off",
+            placeholder: "7",
+            min: "1",
         })
-        .registerSetting(function () {
-            return [
-                m(".Form-group", [
-                    m("label", trans("cake_bg_color_label")),
-                    m(".helpText", trans("cake_bg_color_help")),
-                    m(ColorPreviewInput, {
-                        bidi: this.setting(
-                            "nearata-cakeday.admin.cake_bg_color"
-                        ),
-                        placeholder: "#FFD449",
-                    }),
-                ]),
-                m(".Form-group", [
-                    m("label", trans("cake_txt_color_label")),
-                    m(".helpText", trans("cake_txt_color_help")),
-                    m(ColorPreviewInput, {
-                        bidi: this.setting(
-                            "nearata-cakeday.admin.cake_text_color"
-                        ),
-                        placeholder: "#FFFFFF",
-                    }),
-                ]),
-            ];
+        .registerSetting({
+            setting: "nearata-cakeday.admin.new_members_label",
+            type: "checkbox",
+            label: trans("new_members_changelabel"),
+        })
+        .registerSetting({
+            setting: "nearata-cakeday.admin.cake_bg_color",
+            type: "color-preview",
+            label: trans("cake_bg_color_label"),
+            help: trans("cake_bg_color_help"),
+            placeholder: "#FFD449",
+        })
+        .registerSetting({
+            setting: "nearata-cakeday.admin.cake_text_color",
+            type: "color-preview",
+            label: trans("cake_txt_color_label"),
+            help: trans("cake_txt_color_help"),
+            placeholder: "#FFFFFF",
         })
         .registerSetting({
             setting: "nearata-cakeday.admin.anniversaries_page",
-            label: trans("anniversaries_page_label"),
             type: "boolean",
+            label: trans("anniversaries_page_label"),
         })
         .registerPermission(
             {
