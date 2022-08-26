@@ -14,17 +14,15 @@ class ForumSettings
         $this->settings = $settings;
     }
 
-    public function __invoke(ForumSerializer $serializer): array
+    public function __invoke(ForumSerializer $serializer, array $model, array $attributes): array
     {
-        $attributes = [];
-
-        $attributes['cakedayNewMembers'] = (bool) $this->settings->get('nearata-cakeday.admin.new_members', false);
-        $attributes['cakedayNewMembersDays'] = (int) $this->settings->get('nearata-cakeday.admin.new_members_days', 1);
-        $attributes['cakedayNewMembersLabel'] = (bool) $this->settings->get('nearata-cakeday.admin.new_members_label', false);
-        $attributes['cakedayBgColor'] = (string) $this->settings->get('nearata-cakeday.admin.cake_bg_color', '');
-        $attributes['cakedayTextColor'] = (string) $this->settings->get('nearata-cakeday.admin.cake_text_color', '');
-        $attributes['cakedayPageEnabled'] = (bool) $this->settings->get('nearata-cakeday.admin.anniversaries_page', false);
-
-        return $attributes;
+        return [
+            'cakedayNewMembers' => (bool) $this->settings->get('nearata-cakeday.admin.new_members'),
+            'cakedayNewMembersDays' => (int) $this->settings->get('nearata-cakeday.admin.new_members_days'),
+            'cakedayNewMembersLabel' => (bool) $this->settings->get('nearata-cakeday.admin.new_members_label'),
+            'cakedayBgColor' => (string) $this->settings->get('nearata-cakeday.admin.cake_bg_color'),
+            'cakedayTextColor' => (string) $this->settings->get('nearata-cakeday.admin.cake_text_color'),
+            'cakedayPageEnabled' => (bool) $this->settings->get('nearata-cakeday.admin.anniversaries_page')
+        ];
     }
 }
