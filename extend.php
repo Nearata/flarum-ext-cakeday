@@ -6,6 +6,7 @@ use Flarum\Extend;
 use Flarum\Api\Serializer\BasicUserSerializer;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\User\Filter\UserFilterer;
+use Flarum\User\User;
 
 return [
     (new Extend\Frontend('forum'))
@@ -25,7 +26,7 @@ return [
         ->addFilter(CakedayFilter::class),
 
     (new Extend\ApiSerializer(BasicUserSerializer::class))
-        ->attribute('canNearataCakedayViewPage', function (BasicUserSerializer $serializer) {
-            return (bool) $serializer->getActor()->can('nearata-cakeday.can_view_anniversaries_page');
+        ->attribute('canNearataCakedayViewPage', function (BasicUserSerializer $serializer, User $user, array $attributes) {
+            return (bool) $user->can('nearata-cakeday.can_view_anniversaries_page');
         })
 ];

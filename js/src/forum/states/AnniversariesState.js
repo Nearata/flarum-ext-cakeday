@@ -1,18 +1,26 @@
-const trans = key => {
-    return app.translator.trans(`nearata-cakeday.forum.page.filter_options.${key}`);
+const trans = (key) => {
+    return app.translator.trans(
+        `nearata-cakeday.forum.page.filter_options.${key}`
+    );
 };
 
-const text1 = dayjs => {
-    const date = dayjs.format('ll');
+const text1 = (dayjs) => {
+    const date = dayjs.format("ll");
 
-    return app.translator.trans('nearata-cakeday.forum.page.anniversaries_for_label', { date });
+    return app.translator.trans(
+        "nearata-cakeday.forum.page.anniversaries_for_label",
+        { date }
+    );
 };
 
 const text2 = (dayjs1, dayjs2) => {
-    const date1 = dayjs1.format('ll');
-    const date2 = dayjs2.format('ll');
+    const date1 = dayjs1.format("ll");
+    const date2 = dayjs2.format("ll");
 
-    return app.translator.trans('nearata-cakeday.forum.page.anniversaries_between_label', { date1, date2 });
+    return app.translator.trans(
+        "nearata-cakeday.forum.page.anniversaries_between_label",
+        { date1, date2 }
+    );
 };
 
 /**
@@ -24,14 +32,15 @@ export default class AnniversariesState {
         this.users = [];
         this.loading = false;
         this.moreResults = false;
-        this.currentFilter = 'today';
+        this.currentFilter = "today";
     }
 
     loadUsers() {
-        app.store.find('users', this.getParams()).then(
-            users => {
+        app.store.find("users", this.getParams()).then(
+            (users) => {
                 this.users.push(...users);
-                this.moreResults = !!users.payload.links && !!users.payload.links.next;
+                this.moreResults =
+                    !!users.payload.links && !!users.payload.links.next;
                 this.loading = false;
                 m.redraw();
             },
@@ -70,20 +79,20 @@ export default class AnniversariesState {
     getParams() {
         const params = {};
 
-        params['page'] = { offset: this.users.length };
-        params['sort'] = 'joinedAt';
-        params['filter'] = { cakeday: this.currentFilter };
+        params["page"] = { offset: this.users.length };
+        params["sort"] = "joinedAt";
+        params["filter"] = { cakeday: this.currentFilter };
 
         return params;
     }
 
     getFilterOptions() {
         return {
-            'today': trans('today'),
-            'tomorrow': trans('tomorrow'),
-            'upcoming': trans('upcoming'),
-            'all': trans('all')
-        }
+            today: trans("today"),
+            tomorrow: trans("tomorrow"),
+            upcoming: trans("upcoming"),
+            all: trans("all"),
+        };
     }
 
     getCurrentFilter() {
@@ -101,24 +110,24 @@ export default class AnniversariesState {
 
     getH2() {
         const today = window.dayjs();
-        const tomorrow = today.add(1, 'day');
-        const upcoming = tomorrow.add(1, 'day');
+        const tomorrow = today.add(1, "day");
+        const upcoming = tomorrow.add(1, "day");
 
-        let text = '';
+        let text = "";
         switch (this.currentFilter) {
-            case 'today':
+            case "today":
                 text = text1(today);
                 break;
-            case 'tomorrow':
+            case "tomorrow":
                 text = text1(tomorrow);
                 break;
-            case 'upcoming':
-                const upcomingTo = upcoming.add(1, 'week');
+            case "upcoming":
+                const upcomingTo = upcoming.add(1, "week");
                 text = text2(upcoming, upcomingTo);
                 break;
-            case 'all':
-                const start = today.startOf('year');
-                const end = today.endOf('year');
+            case "all":
+                const start = today.startOf("year");
+                const end = today.endOf("year");
                 text = text2(start, end);
                 break;
             default:
