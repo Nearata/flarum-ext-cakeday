@@ -1,10 +1,10 @@
 import AnniversariesPage from "./components/AnniversariesPage";
 import Badge from "flarum/common/components/Badge";
-import IndexPage from "flarum/common/components/IndexPage";
 import LinkButton from "flarum/common/components/LinkButton";
 import { extend } from "flarum/common/extend";
 import User from "flarum/common/models/User";
 import app from "flarum/forum/app";
+import IndexPage from "flarum/forum/components/IndexPage";
 
 const memberDay = (today, joinTime) => {
     const days = app.forum.attribute("cakedayNewMembersDays");

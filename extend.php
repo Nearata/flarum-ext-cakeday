@@ -9,12 +9,13 @@ use Flarum\User\Filter\UserFilterer;
 use Nearata\CakeDay\Api\Serializer\ExtendBasicUserSerializer;
 use Nearata\CakeDay\Api\Serializer\ExtendForumSerializer;
 use Nearata\CakeDay\Filter\CakedayFilter;
+use Nearata\CakeDay\Frontend\AnniversariesRoute;
 
 return [
     (new Extend\Frontend('forum'))
         ->js(__DIR__.'/js/dist/forum.js')
         ->css(__DIR__.'/resources/less/forum.less')
-        ->route('/anniversaries', 'nearata_cakeday_anniversaries'),
+        ->route('/anniversaries', 'nearata_cakeday_anniversaries', AnniversariesRoute::class),
 
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js'),

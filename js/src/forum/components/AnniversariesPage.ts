@@ -2,24 +2,37 @@ import AnniversariesState from "../states/AnniversariesState";
 import AnniversariesList from "./AnniversariesList";
 import Button from "flarum/common/components/Button";
 import Dropdown from "flarum/common/components/Dropdown";
-import IndexPage from "flarum/common/components/IndexPage";
+import Page from "flarum/common/components/Page";
 import listItems from "flarum/common/helpers/listItems";
 import ItemList from "flarum/common/utils/ItemList";
-import Page from "flarum/forum/components/Page";
+import app from "flarum/forum/app";
+import IndexPage from "flarum/forum/components/IndexPage";
 
 /**
  * Based on FriendsOfFlarum's UserDirectoryPage
  */
 
 export default class AnniversariesPage extends Page {
-    oninit(vnode) {
+    anniversariesState!: AnniversariesState;
+    filterOptions!: { [key: string]: any };
+    currentFilter!: string;
+
+    oninit(vnode: any) {
         super.oninit(vnode);
 
-        this.state = new AnniversariesState();
-        this.state.refreshUsers();
+        this.anniversariesState = new AnniversariesState();
+        this.anniversariesState.refreshUsers();
 
-        this.filterOptions = this.state.getFilterOptions();
-        this.currentFilter = this.state.getCurrentFilter();
+        this.filterOptions = this.anniversariesState.getFilterOptions();
+        this.currentFilter = this.anniversariesState.getCurrentFilter();
+    }
+
+    oncreate(vnode: any) {
+        super.oncreate(vnode);
+
+        // @ts-ignore
+        app.setTitle(app.translator.trans("nearata-cakeday.forum.page.title"));
+        app.setTitleCount(0);
     }
 
     view() {
@@ -42,7 +55,9 @@ export default class AnniversariesPage extends Page {
                                     listItems(this.actionItems().toArray())
                                 ),
                             ]),
-                            m(AnniversariesList, { state: this.state }),
+                            m(AnniversariesList, {
+                                state: this.anniversariesState,
+                            }),
                         ]),
                     ]),
                 ]),
@@ -54,7 +69,7 @@ export default class AnniversariesPage extends Page {
         return IndexPage.prototype.sidebarItems();
     }
 
-    viewItems() {
+    viewItems(): ItemList<any> {
         const items = new ItemList();
 
         items.add(
@@ -87,7 +102,7 @@ export default class AnniversariesPage extends Page {
         return items;
     }
 
-    actionItems() {
+    actionItems(): ItemList<any> {
         const items = new ItemList();
 
         items.add(
@@ -97,7 +112,7 @@ export default class AnniversariesPage extends Page {
                 icon: "fas fa-sync",
                 class: "Button Button--icon",
                 onclick: () => {
-                    this.state.refreshUsers();
+                    this.anniversariesState.refreshUsers();
                 },
             })
         );
@@ -105,8 +120,8 @@ export default class AnniversariesPage extends Page {
         return items;
     }
 
-    changeFilter(option) {
-        this.state.changeFilter(option);
-        this.currentFilter = this.state.getCurrentFilter();
+    changeFilter(option: string) {
+        this.anniversariesState.changeFilter(option);
+        this.currentFilter = this.anniversariesState.getCurrentFilter();
     }
 }

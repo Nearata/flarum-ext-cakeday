@@ -1,20 +1,26 @@
+import AnniversariesState from "../states/AnniversariesState";
 import AnniversariesListItem from "./AnniversariesListItem";
-import Component from "flarum/common/Component";
+import Component, { ComponentAttrs } from "flarum/common/Component";
 import Button from "flarum/common/components/Button";
 import LoadingIndicator from "flarum/common/components/LoadingIndicator";
 import Placeholder from "flarum/common/components/Placeholder";
+import app from "flarum/forum/app";
+
+interface Attrs extends ComponentAttrs {
+    state: AnniversariesState;
+}
 
 /**
  * Based on FriendsOfFlarum's UserDirectoryList
  */
 
-export default class AnniversariesList extends Component {
+export default class AnniversariesList extends Component<Attrs> {
     view() {
         const state = this.attrs.state;
 
         let loading;
 
-        if (state.isLoading()) {
+        if (state.loading) {
             loading = m(LoadingIndicator);
         } else if (state.hasMoreResults()) {
             loading = m(

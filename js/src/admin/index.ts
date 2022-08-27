@@ -1,6 +1,6 @@
 import app from "flarum/admin/app";
 
-const trans = (key) => {
+const trans = (key: string) => {
     return app.translator.trans(`nearata-cakeday.admin.settings.${key}`);
 };
 
@@ -52,7 +52,6 @@ app.initializers.add("nearata-cakeday", () => {
                     "nearata-cakeday.admin.permissions.can_view_anniversaries_page"
                 ),
                 permission: "nearata-cakeday.can_view_anniversaries_page",
-                tagScoped: true,
             },
             "view"
         );

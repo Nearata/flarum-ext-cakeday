@@ -1,10 +1,14 @@
-const trans = (key) => {
+import { NestedStringArray } from "@askvortsov/rich-icu-message-formatter";
+import User from "flarum/common/models/User";
+import app from "flarum/forum/app";
+
+const trans = (key: string) => {
     return app.translator.trans(
         `nearata-cakeday.forum.page.filter_options.${key}`
     );
 };
 
-const text1 = (dayjs) => {
+const text1 = (dayjs: any) => {
     const date = dayjs.format("ll");
 
     return app.translator.trans(
@@ -13,7 +17,7 @@ const text1 = (dayjs) => {
     );
 };
 
-const text2 = (dayjs1, dayjs2) => {
+const text2 = (dayjs1: any, dayjs2: any) => {
     const date1 = dayjs1.format("ll");
     const date2 = dayjs2.format("ll");
 
@@ -28,6 +32,11 @@ const text2 = (dayjs1, dayjs2) => {
  */
 
 export default class AnniversariesState {
+    users: Array<User>;
+    loading: boolean;
+    moreResults: boolean;
+    currentFilter: string;
+
     constructor() {
         this.users = [];
         this.loading = false;
@@ -37,15 +46,19 @@ export default class AnniversariesState {
 
     loadUsers() {
         app.store.find("users", this.getParams()).then(
-            (users) => {
+            (users: any) => {
                 this.users.push(...users);
+
                 this.moreResults =
                     !!users.payload.links && !!users.payload.links.next;
+
                 this.loading = false;
+
                 m.redraw();
             },
             () => {
                 this.loading = false;
+
                 m.redraw();
             }
         );
@@ -58,16 +71,17 @@ export default class AnniversariesState {
         this.loadUsers();
     }
 
-    hasMoreResults() {
+    hasMoreResults(): boolean {
         return this.moreResults;
     }
 
     clearUsers() {
         this.users = [];
+
         m.redraw();
     }
 
-    isLoading() {
+    isLoading(): boolean {
         return this.loading;
     }
 
@@ -76,8 +90,8 @@ export default class AnniversariesState {
         this.loadUsers();
     }
 
-    getParams() {
-        const params = {};
+    getParams(): any {
+        const params: { [key: string]: any } = {};
 
         params["page"] = { offset: this.users.length };
         params["sort"] = "joinedAt";
@@ -86,7 +100,7 @@ export default class AnniversariesState {
         return params;
     }
 
-    getFilterOptions() {
+    getFilterOptions(): { [key: string]: any } {
         return {
             today: trans("today"),
             tomorrow: trans("tomorrow"),
@@ -95,25 +109,26 @@ export default class AnniversariesState {
         };
     }
 
-    getCurrentFilter() {
+    getCurrentFilter(): string {
         return this.currentFilter;
     }
 
-    changeFilter(option) {
+    changeFilter(option: string) {
         this.currentFilter = option;
         this.refreshUsers();
     }
 
-    isEmpty() {
+    isEmpty(): boolean {
         return this.users.length === 0 && !this.isLoading();
     }
 
-    getH2() {
+    getH2(): NestedStringArray {
         const today = window.dayjs();
         const tomorrow = today.add(1, "day");
         const upcoming = tomorrow.add(1, "day");
 
-        let text = "";
+        let text: string | NestedStringArray = "";
+
         switch (this.currentFilter) {
             case "today":
                 text = text1(today);

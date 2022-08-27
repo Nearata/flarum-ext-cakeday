@@ -1,16 +1,23 @@
-import Component from "flarum/common/Component";
+import Component, { ComponentAttrs } from "flarum/common/Component";
 import avatar from "flarum/common/helpers/avatar";
+import User from "flarum/common/models/User";
+
+interface Attrs extends ComponentAttrs {
+    user: User;
+}
 
 /**
  * Based on FriendsOfFlarum's UserDirectoryListItem
  */
 
-export default class UserDirectoryListItem extends Component {
+export default class UserDirectoryListItem extends Component<Attrs> {
+    user!: User;
+
     view() {
         const user = this.attrs.user;
         const todayYear = window.dayjs().year();
 
-        const getFormattedDate = (date) => {
+        const getFormattedDate = (date: any) => {
             return window.dayjs(date).year(todayYear).format("YYYY-MM-DD");
         };
 

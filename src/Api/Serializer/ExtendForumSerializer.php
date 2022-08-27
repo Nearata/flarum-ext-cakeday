@@ -17,6 +17,7 @@ class ExtendForumSerializer
     public function __invoke(ForumSerializer $serializer, array $model, array $attributes): array
     {
         return [
+            'canNearataCakedayViewPage' => (bool) $serializer->getActor()->can('nearata-cakeday.can_view_anniversaries_page'),
             'cakedayNewMembers' => (bool) $this->settings->get('nearata-cakeday.admin.new_members'),
             'cakedayNewMembersDays' => (int) $this->settings->get('nearata-cakeday.admin.new_members_days'),
             'cakedayNewMembersLabel' => (bool) $this->settings->get('nearata-cakeday.admin.new_members_label'),
