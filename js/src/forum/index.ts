@@ -7,98 +7,96 @@ import app from "flarum/forum/app";
 import IndexPage from "flarum/forum/components/IndexPage";
 
 const memberDay = (today, joinTime) => {
-    const days = app.forum.attribute("cakedayNewMembersDays");
-    const endDate = window.dayjs(joinTime).add(days, "day");
+  const days = app.forum.attribute("cakedayNewMembersDays");
+  const endDate = window.dayjs(joinTime).add(days, "day");
 
-    return today < endDate;
+  return today < endDate;
 };
 
 app.initializers.add("nearata-cakeday", () => {
-    app.routes.nearata_cakeday_anniversaries = {
-        path: "/anniversaries",
-        resolver: {
-            onmatch: function (args) {
-                if (!app.forum.attribute("cakedayPageEnabled")) {
-                    return m.route.SKIP;
-                }
-
-                if (!app.session.user) {
-                    return m.route.SKIP;
-                }
-
-                if (!app.session.user.attribute("canNearataCakedayViewPage")) {
-                    return m.route.SKIP;
-                }
-
-                return AnniversariesPage;
-            },
-        },
-    };
-
-    extend(IndexPage.prototype, "navItems", (items) => {
+  app.routes.nearata_cakeday_anniversaries = {
+    path: "/anniversaries",
+    resolver: {
+      onmatch: function (args) {
         if (!app.forum.attribute("cakedayPageEnabled")) {
-            return;
+          return m.route.SKIP;
         }
 
         if (!app.session.user) {
-            return;
+          return m.route.SKIP;
         }
 
         if (!app.session.user.attribute("canNearataCakedayViewPage")) {
-            return;
+          return m.route.SKIP;
         }
 
-        items.add(
-            "nearataCakedayAnniversaries",
-            m(
-                LinkButton,
-                {
-                    href: app.route("nearata_cakeday_anniversaries"),
-                    icon: "fas fa-birthday-cake",
-                },
-                app.translator.trans("nearata-cakeday.forum.page.title")
-            )
-        );
-    });
+        return AnniversariesPage;
+      },
+    },
+  };
 
-    extend(User.prototype, "badges", function (items) {
-        const joinTime = this.joinTime();
+  extend(IndexPage.prototype, "navItems", (items) => {
+    if (!app.forum.attribute("cakedayPageEnabled")) {
+      return;
+    }
 
-        const join = window.dayjs(joinTime);
-        const today = window.dayjs();
+    if (!app.session.user) {
+      return;
+    }
 
-        let label = app.translator.trans("nearata-cakeday.forum.anniversary");
+    if (!app.session.user.attribute("canNearataCakedayViewPage")) {
+      return;
+    }
 
-        const isMemberDay = app.forum.attribute("cakedayNewMembers");
-        const isSameYear =
-            today.year() === join.year() && memberDay(today, joinTime);
+    items.add(
+      "nearataCakedayAnniversaries",
+      m(
+        LinkButton,
+        {
+          href: app.route("nearata_cakeday_anniversaries"),
+          icon: "fas fa-birthday-cake",
+        },
+        app.translator.trans("nearata-cakeday.forum.page.title")
+      )
+    );
+  });
 
-        if (isMemberDay && (isSameYear || memberDay(today, join))) {
-            if (app.forum.attribute("cakedayNewMembersLabel")) {
-                label = app.translator.trans(
-                    "nearata-cakeday.forum.new_member_label"
-                );
-            }
-        } else {
-            const isMonth = join.month() === today.month();
-            const isDay = join.date() === today.date();
+  extend(User.prototype, "badges", function (items) {
+    const joinTime = this.joinTime();
 
-            if (!(isMonth && isDay)) {
-                return;
-            }
-        }
+    const join = window.dayjs(joinTime);
+    const today = window.dayjs();
 
-        const bgColor = app.forum.attribute("cakedayBgColor");
-        const textColor = app.forum.attribute("cakedayTextColor");
+    let label = app.translator.trans("nearata-cakeday.forum.anniversary");
 
-        items.add(
-            "nearataCakeday",
-            m(Badge, {
-                type: "cakeday",
-                icon: "fas fa-birthday-cake",
-                label: label,
-                style: `background-color:${bgColor};color:${textColor}`,
-            })
-        );
-    });
+    const isMemberDay = app.forum.attribute("cakedayNewMembers");
+    const isSameYear =
+      today.year() === join.year() && memberDay(today, joinTime);
+
+    if (isMemberDay && (isSameYear || memberDay(today, join))) {
+      if (app.forum.attribute("cakedayNewMembersLabel")) {
+        label = app.translator.trans("nearata-cakeday.forum.new_member_label");
+      }
+    } else {
+      const isMonth = join.month() === today.month();
+      const isDay = join.date() === today.date();
+
+      if (!(isMonth && isDay)) {
+        return;
+      }
+    }
+
+    const bgColor = app.forum.attribute("cakedayBgColor");
+    const textColor = app.forum.attribute("cakedayTextColor");
+
+    items.add(
+      "nearataCakeday",
+      m(Badge, {
+        type: "cakeday",
+        icon: "fas fa-birthday-cake",
+        label: label,
+        style: `background-color:${bgColor};color:${textColor}`,
+      })
+    );
+  });
 });

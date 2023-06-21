@@ -14,13 +14,13 @@ use Nearata\CakeDay\Frontend\AnniversariesRoute;
 return [
     (new Extend\Frontend('forum'))
         ->js(__DIR__.'/js/dist/forum.js')
-        ->css(__DIR__.'/resources/less/forum.less')
+        ->css(__DIR__.'/less/forum.less')
         ->route('/anniversaries', 'nearata_cakeday_anniversaries', AnniversariesRoute::class),
 
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js'),
 
-    new Extend\Locales(__DIR__ . '/resources/locale'),
+    new Extend\Locales(__DIR__ . '/locale'),
 
     (new Extend\ApiSerializer(ForumSerializer::class))
         ->attributes(ExtendForumSerializer::class),
