@@ -1,5 +1,5 @@
-import { NestedStringArray } from "@askvortsov/rich-icu-message-formatter";
 import User from "flarum/common/models/User";
+import extractText from "flarum/common/utils/extractText";
 import app from "flarum/forum/app";
 
 const trans = (key: string) => {
@@ -27,69 +27,43 @@ const text2 = (dayjs1: any, dayjs2: any) => {
   );
 };
 
-/**
- * Based on FriendsOfFlarum's UserDirectoryState
- */
-
 export default class AnniversariesState {
-  users: Array<User>;
+  users: User[];
   loading: boolean;
-  moreResults: boolean;
+  hasMoreResults: boolean;
   currentFilter: string;
+  filterOptions: { [key: string]: string };
 
   constructor() {
     this.users = [];
     this.loading = false;
-    this.moreResults = false;
+    this.hasMoreResults = false;
     this.currentFilter = "today";
+    this.filterOptions = {
+      today: extractText(trans("today")),
+      tomorrow: extractText(trans("tomorrow")),
+      upcoming: extractText(trans("upcoming")),
+      all: extractText(trans("all")),
+    };
   }
 
-  loadUsers() {
-    app.store.find("users", this.getParams()).then(
-      (users: any) => {
-        this.users.push(...users);
-
-        this.moreResults = !!users.payload.links && !!users.payload.links.next;
-
-        this.loading = false;
-
-        m.redraw();
-      },
-      () => {
-        this.loading = false;
-
-        m.redraw();
-      }
-    );
-  }
-
-  refreshUsers() {
+  async loadMore() {
     this.loading = true;
 
-    this.clearUsers();
-    this.loadUsers();
+    await app.store
+      .find<User[]>("users", this.params())
+      .then((r) => {
+        this.users.push(...r);
+        this.hasMoreResults = !!r.payload.links?.next;
+      })
+      .catch(() => {})
+      .finally(() => {
+        this.loading = false;
+        m.redraw();
+      });
   }
 
-  hasMoreResults(): boolean {
-    return this.moreResults;
-  }
-
-  clearUsers() {
-    this.users = [];
-
-    m.redraw();
-  }
-
-  isLoading(): boolean {
-    return this.loading;
-  }
-
-  loadMore() {
-    this.loading = true;
-    this.loadUsers();
-  }
-
-  getParams(): any {
+  params() {
     const params: { [key: string]: any } = {};
 
     params["page"] = { offset: this.users.length };
@@ -99,50 +73,37 @@ export default class AnniversariesState {
     return params;
   }
 
-  getFilterOptions(): { [key: string]: any } {
-    return {
-      today: trans("today"),
-      tomorrow: trans("tomorrow"),
-      upcoming: trans("upcoming"),
-      all: trans("all"),
-    };
-  }
-
-  getCurrentFilter(): string {
-    return this.currentFilter;
-  }
-
-  changeFilter(option: string) {
+  refresh(option: string = this.currentFilter) {
     this.currentFilter = option;
-    this.refreshUsers();
+
+    this.users = [];
+
+    this.loadMore();
   }
 
-  isEmpty(): boolean {
-    return this.users.length === 0 && !this.isLoading();
-  }
-
-  getH2(): NestedStringArray {
+  getH2() {
+    // @ts-ignore
     const today = window.dayjs();
     const tomorrow = today.add(1, "day");
     const upcoming = tomorrow.add(1, "day");
 
-    let text: string | NestedStringArray = "";
+    let text = "";
 
     switch (this.currentFilter) {
       case "today":
-        text = text1(today);
+        text = extractText(text1(today));
         break;
       case "tomorrow":
-        text = text1(tomorrow);
+        text = extractText(text1(tomorrow));
         break;
       case "upcoming":
         const upcomingTo = upcoming.add(1, "week");
-        text = text2(upcoming, upcomingTo);
+        text = extractText(text2(upcoming, upcomingTo));
         break;
       case "all":
         const start = today.startOf("year");
         const end = today.endOf("year");
-        text = text2(start, end);
+        text = extractText(text2(start, end));
         break;
       default:
         break;

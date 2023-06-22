@@ -51,7 +51,7 @@ app.initializers.add("nearata-cakeday", () => {
         label: app.translator.trans(
           "nearata-cakeday.admin.permissions.can_view_anniversaries_page"
         ),
-        permission: "nearata-cakeday.can_view_anniversaries_page",
+        permission: "nearata-cakeday.can-view-anniversaries-page",
       },
       "view"
     );

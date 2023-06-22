@@ -2,11 +2,10 @@
 
 namespace Nearata\CakeDay\Filter;
 
-use Flarum\Filter\FilterInterface;
-use Flarum\Filter\FilterState;
-
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Flarum\Filter\FilterInterface;
+use Flarum\Filter\FilterState;
 
 class CakedayFilter implements FilterInterface
 {
@@ -17,7 +16,7 @@ class CakedayFilter implements FilterInterface
 
     public function filter(FilterState $filterState, string $filterValue, bool $negate): void
     {
-        if (!$filterValue) {
+        if (! $filterValue) {
             return;
         }
 

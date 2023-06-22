@@ -1,4 +1,3 @@
-import AnniversariesPage from "./components/AnniversariesPage";
 import Badge from "flarum/common/components/Badge";
 import LinkButton from "flarum/common/components/LinkButton";
 import { extend } from "flarum/common/extend";
@@ -14,50 +13,19 @@ const memberDay = (today, joinTime) => {
 };
 
 app.initializers.add("nearata-cakeday", () => {
-  app.routes.nearata_cakeday_anniversaries = {
-    path: "/anniversaries",
-    resolver: {
-      onmatch: function (args) {
-        if (!app.forum.attribute("cakedayPageEnabled")) {
-          return m.route.SKIP;
-        }
-
-        if (!app.session.user) {
-          return m.route.SKIP;
-        }
-
-        if (!app.session.user.attribute("canNearataCakedayViewPage")) {
-          return m.route.SKIP;
-        }
-
-        return AnniversariesPage;
-      },
-    },
-  };
-
   extend(IndexPage.prototype, "navItems", (items) => {
-    if (!app.forum.attribute("cakedayPageEnabled")) {
-      return;
-    }
-
-    if (!app.session.user) {
-      return;
-    }
-
-    if (!app.session.user.attribute("canNearataCakedayViewPage")) {
+    if (!app.session.user?.attribute<boolean>("canNearataCakedayViewPage")) {
       return;
     }
 
     items.add(
       "nearataCakedayAnniversaries",
-      m(
-        LinkButton,
-        {
-          href: app.route("nearata_cakeday_anniversaries"),
-          icon: "fas fa-birthday-cake",
-        },
-        app.translator.trans("nearata-cakeday.forum.page.title")
-      )
+      <LinkButton
+        href={app.route("nearata-cakeday.anniversaries")}
+        icon="fas fa-birthday-cake"
+      >
+        {app.translator.trans("nearata-cakeday.forum.page.title")}
+      </LinkButton>
     );
   });
 
@@ -91,12 +59,14 @@ app.initializers.add("nearata-cakeday", () => {
 
     items.add(
       "nearataCakeday",
-      m(Badge, {
-        type: "cakeday",
-        icon: "fas fa-birthday-cake",
-        label: label,
-        style: `background-color:${bgColor};color:${textColor}`,
-      })
+      <Badge
+        type="cakeday"
+        icon="fas fa-birthday-cake"
+        label={label}
+        style={`background-color:${bgColor};color:${textColor}`}
+      />
     );
   });
 });
+
+export { default as extend } from "./extend";
