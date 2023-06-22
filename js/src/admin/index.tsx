@@ -7,24 +7,8 @@ const trans = (key: string) => {
 app.initializers.add("nearata-cakeday", () => {
   app.extensionData
     .for("nearata-cakeday")
-    .registerSetting({
-      setting: "nearata-cakeday.admin.new_members",
-      type: "boolean",
-      label: trans("new_members"),
-    })
-    .registerSetting({
-      setting: "nearata-cakeday.admin.new_members_days",
-      type: "number",
-      label: trans("new_members_howlong"),
-      help: trans("new_members_howlong_help"),
-      autocomplete: "off",
-      placeholder: "7",
-      min: "1",
-    })
-    .registerSetting({
-      setting: "nearata-cakeday.admin.new_members_label",
-      type: "checkbox",
-      label: trans("new_members_changelabel"),
+    .registerSetting(() => {
+      return <h2>{trans("general_section_title")}</h2>;
     })
     .registerSetting({
       setting: "nearata-cakeday.admin.cake_bg_color",
@@ -44,6 +28,28 @@ app.initializers.add("nearata-cakeday", () => {
       setting: "nearata-cakeday.admin.anniversaries_page",
       type: "boolean",
       label: trans("anniversaries_page_label"),
+    })
+    .registerSetting(() => {
+      return <h2>{trans("members_section_title")}</h2>;
+    })
+    .registerSetting({
+      setting: "nearata-cakeday.admin.new_members",
+      type: "boolean",
+      label: trans("new_members"),
+    })
+    .registerSetting({
+      setting: "nearata-cakeday.admin.new_members_days",
+      type: "number",
+      label: trans("new_members_howlong"),
+      help: trans("new_members_howlong_help"),
+      autocomplete: "off",
+      placeholder: "7",
+      min: "1",
+    })
+    .registerSetting({
+      setting: "nearata-cakeday.admin.new_members_label",
+      type: "checkbox",
+      label: trans("new_members_changelabel"),
     })
     .registerPermission(
       {

@@ -5,6 +5,7 @@ namespace Nearata\CakeDay\Frontend;
 use Flarum\Frontend\Document;
 use Flarum\Http\Exception\RouteNotFoundException;
 use Flarum\Http\RequestUtil;
+use Nearata\CakeDay\Helpers;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -18,7 +19,7 @@ class AnniversariesRoute
     {
         $actor = RequestUtil::getActor($request);
 
-        if ($actor->cannot('nearata-cakeday.can-view-anniversaries-page')) {
+        if (! Helpers::canView($actor)) {
             throw new RouteNotFoundException();
         }
 
